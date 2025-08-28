@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <title>தமிழ் ChatGPT</title>
+</head>
+<body>
+  <h2>👋 வணக்கம்! எப்படி உதவலாம்?</h2>
+  <div id="chat"></div>
+  <input id="msg" placeholder="உங்கள் கேள்வியை தமிழில் எழுதுங்கள்...">
+  <button onclick="send()">Send</button>
+
+  <script>
+    async function send() {
+      let msg = document.getElementById("msg").value;
+      let res = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: msg})
+      });
+      let data = await res.json();
+      document.getElementById("chat").innerHTML += "<p><b>நீங்கள்:</b> " + msg + "</p>";
+      document.getElementById("chat").innerHTML += "<p><b>AI:</b> " + data.reply + "</p>";
+      document.getElementById("msg").value = "";
+    }
+  </script>
+</body>
+</html>
